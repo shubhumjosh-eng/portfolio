@@ -7,12 +7,23 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="//unpkg.com">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
 body{background:#0a0a0a;color:#e8e8e8;font-family:'Space Grotesk',sans-serif;overflow-x:hidden;cursor:none;width:100%}
 ::selection{background:rgba(255,255,255,0.15);color:#fff}
-::-webkit-scrollbar{display:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0a0a0a}
+::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:#333}
+
+body.loading main{opacity:0}
+.preloader{position:fixed;inset:0;z-index:100000;background:#0a0a0a;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:opacity 0.8s ease,visibility 0.8s ease}
+.preloader.hidden{opacity:0;visibility:hidden}
+.preloader-inner{width:24px;height:24px;border:1px solid rgba(255,255,255,0.06);border-top-color:rgba(255,255,255,0.3);border-radius:50%;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 canvas#blob-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
 
@@ -76,7 +87,10 @@ section{position:relative;width:100%}
 .project-card-link svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.3s}
 .project-card-link:hover svg{transform:translate(3px,-2px)}
 
-.contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh 8vw}
+.marquee{height:25vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04)}
+.marquee-track{display:flex;gap:4rem;white-space:nowrap;will-change:transform;padding:0 4rem}
+.marquee-track span{font-size:clamp(2.5rem,5vw,5rem);font-weight:200;color:rgba(255,255,255,0.05);letter-spacing:-0.02em}
+.marquee-track span::after{content:'\00b7';margin:0 2rem;color:rgba(255,255,255,0.08)}
 .contact-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#555;margin-bottom:2rem}
 .contact-title{font-size:clamp(2rem,5vw,5.5rem);font-weight:300;line-height:1.1;letter-spacing:-0.03em;color:#fff;max-width:8em;margin-bottom:0.5rem}
 .contact-title .char{display:inline-block;will-change:transform}
@@ -124,7 +138,9 @@ footer{padding:2rem 6vw;flex-direction:column;text-align:center}
 }
 </style>
 </head>
-<body>
+<body class="loading">
+
+<div class="preloader" id="preloader"><div class="preloader-inner"></div></div>
 
 <canvas id="blob-canvas"></canvas>
 
@@ -151,6 +167,8 @@ footer{padding:2rem 6vw;flex-direction:column;text-align:center}
 <div class="about-detail-item"><span class="about-detail-label">Stack</span><span class="about-detail-value">Next.js · TypeScript · Three.js</span></div>
 </div>
 </section>
+
+<section class="marquee"><div class="marquee-track" id="marqueeTrack"><span>Web Development</span><span>AI Tools</span><span>UI/UX Design</span><span>Web Development</span><span>AI Tools</span><span>UI/UX Design</span></div></section>
 
 <section class="projects-section" id="projects">
 <div class="projects-header">
@@ -212,6 +230,7 @@ View projects
 </div>
 </div>
 <div class="contact-links">
+<a href="https://github.com/shubhumjosh-eng" class="contact-link" target="_blank" rel="noopener">GitHub</a>
 <a href="https://sanctuary-yoga.vercel.app" class="contact-link" target="_blank" rel="noopener">Sanctuary Yoga</a>
 <a href="https://youtube-hook-generator2.vercel.app" class="contact-link" target="_blank" rel="noopener">YouTube Hook Gen</a>
 <a href="mailto:hello@shubhumjoshi.com" class="contact-link">Email</a>
@@ -221,6 +240,7 @@ View projects
 <footer>
 <p>&copy; 2024 Shubhum Joshi · Built with code &amp; curiosity</p>
 <div class="footer-links">
+<a href="https://github.com/shubhumjosh-eng" target="_blank" rel="noopener">GitHub</a>
 <a href="https://sanctuary-yoga.vercel.app" target="_blank" rel="noopener">Sanctuary</a>
 <a href="https://youtube-hook-generator2.vercel.app" target="_blank" rel="noopener">Hook Gen</a>
 </div>
@@ -322,7 +342,7 @@ float alpha=0.75+0.15*fresnel+0.1*rim;
 gl_FragColor=vec4(col,alpha);
 }`;
 
-const geo=new THREE.IcosahedronGeometry(1.1,5);
+const geo=new THREE.IcosahedronGeometry(1.1,isTouch?3:5);
 const mat=new THREE.ShaderMaterial({
 uniforms:{
 uTime:{value:0},
@@ -338,6 +358,15 @@ blending:THREE.NormalBlending
 });
 const mesh=new THREE.Mesh(geo,mat);
 scene.add(mesh);
+
+const pCount=isTouch?200:800;
+const pGeo=new THREE.BufferGeometry();
+const pPos=new Float32Array(pCount*3);
+for(let i=0;i<pCount*3;i++)pPos[i]=(Math.random()-0.5)*10;
+pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+const pMat=new THREE.PointsMaterial({color:0x444466,size:0.015,transparent:true,opacity:0.4,blending:THREE.AdditiveBlending});
+const particles=new THREE.Points(pGeo,pMat);
+scene.add(particles);
 
 const mouse={x:0,y:0,targetX:0,targetY:0};
 
@@ -355,6 +384,8 @@ mat.uniforms.uMouse.value.set(mouse.x*0.5,mouse.y*0.5);
 mesh.rotation.x+=mouse.y*0.005;
 mesh.rotation.y+=mouse.x*0.005;
 mesh.rotation.z=Math.sin(mat.uniforms.uTime.value*0.1)*0.02;
+particles.rotation.x=Math.sin(mat.uniforms.uTime.value*0.03)*0.1;
+particles.rotation.y+=0.0004;
 renderer.render(scene,camera);
 }
 animate();
@@ -420,6 +451,24 @@ lenis.on('scroll',ScrollTrigger.update);
 gsap.ticker.add((time)=>{lenis.raf(time*1000);});
 gsap.ticker.lagSmoothing(0);
 window.lenis=lenis;
+})();
+
+// === MARQUEE SCROLL ===
+(function(){
+const track=document.getElementById('marqueeTrack');
+if(!track)return;
+const clone=track.innerHTML;
+track.innerHTML+=clone;
+let x=0;
+const speed=0.4;
+function animMarquee(){
+x-=speed;
+const half=track.scrollWidth/2;
+if(x<=-half)x+=half;
+track.style.transform='translateX('+x+'px)';
+requestAnimationFrame(animMarquee);
+}
+animMarquee();
 })();
 
 // === GSAP + SCROLLTRIGGER SETUP ===
@@ -617,6 +666,12 @@ glare:false
 }
 
 console.log('%c Shubhum Joshi %c Portfolio 2024 ','background:#0a0a0a;color:#fff;padding:8px 12px;font-size:14px;font-family:monospace','background:#fff;color:#0a0a0a;padding:8px 12px;font-size:14px;font-family:monospace');
+
+// === PRELOADER ===
+setTimeout(()=>{
+document.getElementById('preloader').classList.add('hidden');
+document.body.classList.remove('loading');
+}, 600);
 
 })();
 </script>
