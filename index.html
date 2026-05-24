@@ -255,6 +255,27 @@ View projects
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
 
 <script>
+// === BOOT — ensures page is always readable regardless of other scripts ===
+(function(){
+const preloader=document.getElementById('preloader');
+const hide=function(){
+preloader.classList.add('hidden');
+document.body.classList.remove('loading');
+};
+if(document.readyState==='complete'){setTimeout(hide,400)}
+else{window.addEventListener('load',function(){setTimeout(hide,400)})}
+setTimeout(hide,2500);// safety net
+// If GSAP isn't loaded after preloader hides, make hero visible
+setTimeout(function(){
+if(typeof gsap==='undefined'){
+var h=document.getElementById('hero');
+if(h)h.style.opacity='1';
+}
+},3000);
+})();
+</script>
+
+<script>
 (function(){
 'use strict';
 
@@ -666,12 +687,6 @@ glare:false
 }
 
 console.log('%c Shubhum Joshi %c Portfolio 2024 ','background:#0a0a0a;color:#fff;padding:8px 12px;font-size:14px;font-family:monospace','background:#fff;color:#0a0a0a;padding:8px 12px;font-size:14px;font-family:monospace');
-
-// === PRELOADER ===
-setTimeout(()=>{
-document.getElementById('preloader').classList.add('hidden');
-document.body.classList.remove('loading');
-}, 600);
 
 })();
 </script>
