@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubhum Joshi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{background:#0a0a0a;color:#e8e8e8;font-family:'Space Grotesk',sans-serif;overflow-x:hidden;cursor:none;width:100%}
+::selection{background:rgba(255,255,255,0.15);color:#fff}
+::-webkit-scrollbar{display:none}
+
+canvas#blob-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
+
+.noise-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;pointer-events:none;mix-blend-mode:overlay;opacity:0.035;will-change:background-position}
+.noise-overlay::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background-image:inherit;background-repeat:repeat;background-size:128px 128px;animation:noiseShift 0.3s steps(4) infinite}
+@keyframes noiseShift{0%{transform:translate(0,0)}25%{transform:translate(-2px,1px)}50%{transform:translate(1px,-2px)}75%{transform:translate(-1px,2px)}100%{transform:translate(2px,1px)}}
+
+.cursor-dot{position:fixed;width:6px;height:6px;background:#fff;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,background 0.3s;will-change:transform}
+.cursor-ring{position:fixed;width:40px;height:40px;border:1px solid rgba(255,255,255,0.3);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,border-color 0.3s,background 0.3s;will-change:transform}
+.cursor-ring.hover{width:60px;height:60px;border-color:rgba(255,255,255,0.6);background:rgba(255,255,255,0.05)}
+.cursor-dot.hover{width:10px;height:10px;background:#fff}
+.cursor-ring.click{width:30px;height:30px;border-color:rgba(255,255,255,0.3)}
+
+main{position:relative;z-index:1;width:100%}
+
+section{position:relative;width:100%}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative;opacity:0}
+.hero-label{font-size:clamp(0.7rem,0.8vw,1rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#666;margin-bottom:2rem}
+.hero-title{font-size:clamp(2.5rem,8vw,8rem);font-weight:300;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:1rem}
+.hero-title .char{display:inline-block;will-change:transform}
+.hero-subtitle{font-size:clamp(0.9rem,1.2vw,1.4rem);font-weight:300;color:#888;letter-spacing:0.02em;line-height:1.6;max-width:40em;margin-top:1.5rem}
+.hero-subtitle span{color:#ccc}
+
+.scroll-indicator{position:absolute;bottom:5vh;left:8vw;display:flex;align-items:center;gap:1rem;opacity:0.3}
+.scroll-indicator span{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.25em;color:#888}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,#888,transparent);animation:scrollPulse 2s ease-in-out infinite}
+@keyframes scrollPulse{0%{transform:scaleY(0.3);opacity:0.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0.3);opacity:0.3}}
+
+.about{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh 8vw}
+.about-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#555;margin-bottom:2rem}
+.about-title{font-size:clamp(1.8rem,4vw,4.5rem);font-weight:300;line-height:1.2;letter-spacing:-0.02em;color:#fff;max-width:12em;margin-bottom:2.5rem}
+.about-title .char,.section-title .char{display:inline-block;will-change:transform}
+.about-text{font-size:clamp(0.9rem,1.1vw,1.3rem);font-weight:300;color:#777;line-height:1.8;max-width:30em}
+.about-text strong{color:#ccc;font-weight:500}
+.about-details{display:flex;gap:4rem;margin-top:3rem;flex-wrap:wrap}
+.about-detail-item{display:flex;flex-direction:column;gap:0.3rem}
+.about-detail-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.2em;color:#555}
+.about-detail-value{font-size:1.1rem;font-weight:400;color:#ccc}
+
+.projects-section{position:relative;height:100vh;padding:0}
+.projects-header{position:absolute;top:8vh;left:8vw;z-index:10;display:flex;align-items:baseline;gap:2rem}
+.projects-header .section-number{font-size:0.65rem;font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#555}
+.projects-header h2{font-size:clamp(1.4rem,2.5vw,3rem);font-weight:300;color:#fff;letter-spacing:-0.02em}
+.projects-sticky{position:relative;height:100vh;width:100%;overflow:hidden;display:flex;align-items:center}
+.projects-track{display:flex;gap:4vw;padding:0 8vw;will-change:transform}
+.project-card{min-width:80vw;max-width:80vw;height:55vh;position:relative;border-radius:0;overflow:hidden;background:#111;display:flex;flex-direction:column;justify-content:flex-end;padding:3rem;cursor:pointer;border:1px solid rgba(255,255,255,0.04);transition:border-color 0.4s}
+.project-card:hover{border-color:rgba(255,255,255,0.1)}
+.project-card-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
+.project-card:hover .project-card-bg{transform:scale(1.05)}
+.project-card-bg-1{background:radial-gradient(ellipse at 30% 50%,#0a1628,#0a0a0a 70%)}
+.project-card-bg-2{background:radial-gradient(ellipse at 70% 30%,#14101a,#0a0a0a 70%)}
+.project-card-content{position:relative;z-index:1}
+.project-card-number{font-size:0.65rem;color:#555;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem}
+.project-card-name{font-size:clamp(1.5rem,2.5vw,2.8rem);font-weight:300;color:#fff;margin-bottom:0.75rem;letter-spacing:-0.02em}
+.project-card-description{font-size:clamp(0.75rem,0.9vw,1rem);font-weight:300;color:#777;line-height:1.6;max-width:32em;margin-bottom:1.5rem}
+.project-card-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+.project-card-tag{font-size:0.65rem;padding:0.3rem 0.8rem;border:1px solid rgba(255,255,255,0.08);color:#888;letter-spacing:0.05em;text-transform:uppercase}
+.project-card-link{display:inline-flex;align-items:center;gap:0.5rem;margin-top:1.5rem;font-size:0.75rem;color:#aaa;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+.project-card-link:hover{color:#fff}
+.project-card-link svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.3s}
+.project-card-link:hover svg{transform:translate(3px,-2px)}
+
+.contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh 8vw}
+.contact-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#555;margin-bottom:2rem}
+.contact-title{font-size:clamp(2rem,5vw,5.5rem);font-weight:300;line-height:1.1;letter-spacing:-0.03em;color:#fff;max-width:8em;margin-bottom:0.5rem}
+.contact-title .char{display:inline-block;will-change:transform}
+.contact-text{font-size:clamp(0.9rem,1.1vw,1.3rem);font-weight:300;color:#777;line-height:1.8;max-width:25em;margin-bottom:3rem}
+.contact-actions{display:flex;gap:2rem;flex-wrap:wrap}
+
+.magnetic-wrap{display:inline-block;position:relative}
+.magnetic-btn{display:inline-flex;align-items:center;gap:0.75rem;padding:1rem 2.5rem;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.15);font-family:'Space Grotesk',sans-serif;font-size:clamp(0.75rem,0.9vw,1rem);font-weight:400;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color 0.4s;position:relative;overflow:hidden;will-change:transform}
+.magnetic-btn::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);z-index:-1}
+.magnetic-btn:hover{color:#0a0a0a;border-color:#fff}
+.magnetic-btn:hover::before{transform:scaleX(1);transform-origin:left}
+.magnetic-btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+
+.contact-links{display:flex;gap:2rem;margin-top:4rem}
+.contact-link{font-size:0.75rem;color:#555;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s;position:relative}
+.contact-link::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:#fff;transition:width 0.4s}
+.contact-link:hover{color:#fff}
+.contact-link:hover::after{width:100%}
+
+footer{padding:3rem 8vw;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer p{font-size:0.7rem;color:#444;letter-spacing:0.05em}
+footer .footer-links{display:flex;gap:1.5rem}
+footer .footer-links a{font-size:0.65rem;color:#555;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+footer .footer-links a:hover{color:#ccc}
+
+[data-cursor-hover]{cursor:none}
+
+@media(max-width:768px){
+body{cursor:auto}
+.cursor-dot,.cursor-ring{display:none!important}
+.hero{padding:0 6vw;min-height:100dvh}
+.hero-title{font-size:clamp(2rem,12vw,4rem)}
+.hero-subtitle{font-size:clamp(0.8rem,3vw,1rem)}
+.about{padding:8vh 6vw}
+.about-title{font-size:clamp(1.5rem,7vw,2.5rem)}
+.about-details{gap:2rem}
+.projects-track{gap:6vw;padding:0 6vw}
+.project-card{min-width:88vw;max-width:88vw;padding:2rem}
+.project-card-name{font-size:clamp(1.2rem,5vw,1.8rem)}
+.contact{padding:8vh 6vw}
+.contact-title{font-size:clamp(1.8rem,8vw,3rem)}
+.contact-actions{gap:1rem}
+.magnetic-btn{padding:0.8rem 1.8rem;font-size:0.75rem}
+footer{padding:2rem 6vw;flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<canvas id="blob-canvas"></canvas>
+
+<div class="noise-overlay" id="noiseOverlay"></div>
+
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<main>
+<section class="hero" id="hero">
+<div class="hero-label">Shubhum Joshi</div>
+<h1 class="hero-title">Digital<br>Architect</h1>
+<p class="hero-subtitle">17 · Hong Kong <span>🇭🇰</span><br>Building websites &amp; AI tools for clients</p>
+<div class="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<section class="about" id="about">
+<div class="about-label">About</div>
+<h2 class="about-title">I craft digital experiences that blend clean code with compelling visuals.</h2>
+<p class="about-text">Based in <strong>Hong Kong</strong>, I build modern websites and AI-powered tools for clients worldwide. Every project is an opportunity to push boundaries — combining thoughtful design with robust engineering.</p>
+<div class="about-details">
+<div class="about-detail-item"><span class="about-detail-label">Location</span><span class="about-detail-value">Hong Kong</span></div>
+<div class="about-detail-item"><span class="about-detail-label">Focus</span><span class="about-detail-value">Web · AI · Design</span></div>
+<div class="about-detail-item"><span class="about-detail-label">Stack</span><span class="about-detail-value">Next.js · TypeScript · Three.js</span></div>
+</div>
+</section>
+
+<section class="projects-section" id="projects">
+<div class="projects-header">
+<span class="section-number">01</span>
+<h2>Selected Work</h2>
+</div>
+<div class="projects-sticky">
+<div class="projects-track" id="projectsTrack">
+<div class="project-card" data-cursor-hover>
+<div class="project-card-bg project-card-bg-1"></div>
+<div class="project-card-content">
+<div class="project-card-number">01</div>
+<h3 class="project-card-name">Sanctuary Yoga</h3>
+<p class="project-card-description">A yoga teacher marketplace connecting students with instructors nationwide. Built for scale, designed for serenity.</p>
+<div class="project-card-tags">
+<span class="project-card-tag">Next.js</span>
+<span class="project-card-tag">Tailwind</span>
+<span class="project-card-tag">Supabase</span>
+<span class="project-card-tag">TypeScript</span>
+</div>
+<a href="https://sanctuary-yoga.vercel.app" class="project-card-link" target="_blank" rel="noopener">Live site <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+</div>
+</div>
+<div class="project-card" data-cursor-hover>
+<div class="project-card-bg project-card-bg-2"></div>
+<div class="project-card-content">
+<div class="project-card-number">02</div>
+<h3 class="project-card-name">YouTube Hook Generator</h3>
+<p class="project-card-description">AI-powered tool that generates scroll-stopping hooks for content creators. Powered by OpenAI, built for creators.</p>
+<div class="project-card-tags">
+<span class="project-card-tag">React</span>
+<span class="project-card-tag">OpenAI</span>
+<span class="project-card-tag">TypeScript</span>
+<span class="project-card-tag">Tailwind</span>
+</div>
+<a href="https://youtube-hook-generator2.vercel.app" class="project-card-link" target="_blank" rel="noopener">Live site <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="contact" id="contact">
+<div class="contact-label">Contact</div>
+<h2 class="contact-title">Let's build something extraordinary.</h2>
+<p class="contact-text">Available for freelance projects, collaborations, or just a conversation.</p>
+<div class="contact-actions">
+<div class="magnetic-wrap">
+<a href="mailto:hello@shubhumjoshi.com" class="magnetic-btn" data-cursor-hover>
+<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13L2 4"/></svg>
+Get in touch
+</a>
+</div>
+<div class="magnetic-wrap">
+<a href="https://youtube-hook-generator2.vercel.app" class="magnetic-btn" data-cursor-hover target="_blank" rel="noopener">
+<svg viewBox="0 0 24 24"><path d="M10 15L15.19 12L10 9V15Z"/><circle cx="12" cy="12" r="10"/></svg>
+View projects
+</a>
+</div>
+</div>
+<div class="contact-links">
+<a href="https://sanctuary-yoga.vercel.app" class="contact-link" target="_blank" rel="noopener">Sanctuary Yoga</a>
+<a href="https://youtube-hook-generator2.vercel.app" class="contact-link" target="_blank" rel="noopener">YouTube Hook Gen</a>
+<a href="mailto:hello@shubhumjoshi.com" class="contact-link">Email</a>
+</div>
+</section>
+
+<footer>
+<p>&copy; 2024 Shubhum Joshi · Built with code &amp; curiosity</p>
+<div class="footer-links">
+<a href="https://sanctuary-yoga.vercel.app" target="_blank" rel="noopener">Sanctuary</a>
+<a href="https://youtube-hook-generator2.vercel.app" target="_blank" rel="noopener">Hook Gen</a>
+</div>
+</footer>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4/umd/index.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+
+<script>
+(function(){
+'use strict';
+
+const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+// === NOISE OVERLAY ===
+(function(){
+const c = document.createElement('canvas');
+c.width = 128;
+c.height = 128;
+const ctx = c.getContext('2d');
+const d = ctx.createImageData(128,128);
+for(let i=0;i<d.data.length;i+=4){
+const v = Math.random()*255;
+d.data[i]=v;d.data[i+1]=v;d.data[i+2]=v;d.data[i+3]=255;
+}
+ctx.putImageData(d,0,0);
+document.getElementById('noiseOverlay').style.backgroundImage='url('+c.toDataURL()+')';
+})();
+
+// === THREE.JS BLOB ===
+(function(){
+if(typeof THREE==='undefined')return;
+const canvas=document.getElementById('blob-canvas');
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,10);
+camera.position.set(0,0,3.5);
+const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setClearColor(0x0a0a0a,0);
+
+const vertexShader=`
+uniform float uTime;
+uniform vec2 uMouse;
+uniform float uAmplitude;
+varying vec3 vNormal;
+varying vec3 vPosition;
+varying float vDisplacement;
+void main(){
+vec3 pos=position;
+float t=uTime*0.35;
+float n=0.0;
+n+=sin(pos.x*1.8+t*0.7)*cos(pos.y*2.2+t*0.5)*sin(pos.z*2.5+t*0.9);
+n+=sin(pos.x*3.2+pos.y*2.0+t*0.6)*0.6;
+n+=cos(pos.y*2.8+pos.z*3.0+t*0.8)*0.4;
+n+=sin(pos.z*2.2+pos.x*3.5+t*0.5)*0.5;
+n+=sin(pos.x*5.0+t*0.3)*cos(pos.y*4.5+t*0.4)*sin(pos.z*5.5+t*0.35)*0.15;
+n+=sin(pos.x*1.2+uMouse.x*2.0)*cos(pos.y*1.2+uMouse.y*2.0)*0.08;
+float d=n*uAmplitude;
+vec3 newPos=pos+normal*d;
+vec4 mvPos=modelViewMatrix*vec4(newPos,1.0);
+vNormal=normalize(normalMatrix*normal);
+vPosition=mvPos.xyz;
+vDisplacement=d;
+gl_Position=projectionMatrix*mvPos;
+}`;
+
+const fragmentShader=`
+uniform float uTime;
+varying vec3 vNormal;
+varying vec3 vPosition;
+varying float vDisplacement;
+void main(){
+vec3 viewDir=normalize(-vPosition);
+vec3 normal=normalize(vNormal);
+float fresnel=1.0-max(dot(viewDir,normal),0.0);
+fresnel=pow(fresnel,3.5);
+float rim=fresnel*(0.4+vDisplacement*3.0);
+float envX=normal.x*0.5+0.5;
+float envY=normal.y*0.5+0.5;
+float envZ=normal.z*0.5+0.5;
+vec3 col=vec3(0.06,0.06,0.08);
+col=mix(col,vec3(0.12,0.14,0.2),envY*0.4);
+col=mix(col,vec3(0.18,0.15,0.12),envX*0.2);
+col=mix(col,vec3(0.1,0.12,0.18),fresnel*0.8);
+col+=vec3(0.35,0.38,0.5)*pow(fresnel,4.0);
+col+=vec3(0.15,0.17,0.22)*rim*1.5;
+vec3 lightDir=normalize(vec3(0.8,1.2,0.5));
+float spec=pow(max(dot(normal,lightDir),0.0),24.0);
+col+=vec3(0.12,0.14,0.2)*spec;
+float pulse=0.5+0.5*sin(uTime*0.4+vDisplacement*2.0);
+col+=vec3(0.04,0.05,0.08)*pulse*0.3;
+float alpha=0.75+0.15*fresnel+0.1*rim;
+gl_FragColor=vec4(col,alpha);
+}`;
+
+const geo=new THREE.IcosahedronGeometry(1.1,5);
+const mat=new THREE.ShaderMaterial({
+uniforms:{
+uTime:{value:0},
+uMouse:{value:new THREE.Vector2(0,0)},
+uAmplitude:{value:0.18}
+},
+vertexShader,
+fragmentShader,
+transparent:true,
+side:THREE.DoubleSide,
+depthWrite:false,
+blending:THREE.NormalBlending
+});
+const mesh=new THREE.Mesh(geo,mat);
+scene.add(mesh);
+
+const mouse={x:0,y:0,targetX:0,targetY:0};
+
+document.addEventListener('mousemove',e=>{
+mouse.targetX=(e.clientX/window.innerWidth-0.5)*2;
+mouse.targetY=-(e.clientY/window.innerHeight-0.5)*2;
+});
+
+function animate(){
+requestAnimationFrame(animate);
+mouse.x+=(mouse.targetX-mouse.x)*0.06;
+mouse.y+=(mouse.targetY-mouse.y)*0.06;
+mat.uniforms.uTime.value+=0.016;
+mat.uniforms.uMouse.value.set(mouse.x*0.5,mouse.y*0.5);
+mesh.rotation.x+=mouse.y*0.005;
+mesh.rotation.y+=mouse.x*0.005;
+mesh.rotation.z=Math.sin(mat.uniforms.uTime.value*0.1)*0.02;
+renderer.render(scene,camera);
+}
+animate();
+
+window.addEventListener('resize',()=>{
+camera.aspect=window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth,window.innerHeight);
+});
+})();
+
+// === CUSTOM CURSOR ===
+if(!isTouch){
+(function(){
+const dot=document.getElementById('cursorDot');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,ringX=0,ringY=0;
+let hidden=true;
+
+document.addEventListener('mousemove',e=>{
+if(hidden){hidden=false;dot.style.opacity=1;ring.style.opacity=1;}
+mx=e.clientX;
+my=e.clientY;
+dot.style.transform='translate('+mx+'px,'+my+'px) translate(-50%,-50%)';
+});
+
+document.addEventListener('mouseleave',()=>{
+hidden=true;
+dot.style.opacity=0;
+ring.style.opacity=0;
+});
+
+document.addEventListener('mouseenter',()=>{
+hidden=false;
+dot.style.opacity=1;
+ring.style.opacity=1;
+});
+
+document.addEventListener('mousedown',()=>ring.classList.add('click'));
+document.addEventListener('mouseup',()=>ring.classList.remove('click'));
+
+const hoverEls=document.querySelectorAll('[data-cursor-hover],a,button,.magnetic-btn,.project-card');
+hoverEls.forEach(el=>{
+el.addEventListener('mouseenter',()=>{ring.classList.add('hover');dot.classList.add('hover');});
+el.addEventListener('mouseleave',()=>{ring.classList.remove('hover');dot.classList.remove('hover');});
+});
+
+function cursorAnim(){
+ringX+=(mx-ringX)*0.12;
+ringY+=(my-ringY)*0.12;
+ring.style.transform='translate('+ringX+'px,'+ringY+'px) translate(-50%,-50%)';
+requestAnimationFrame(cursorAnim);
+}
+cursorAnim();
+})();
+}
+
+// === LENIS SMOOTH SCROLL ===
+(function(){
+if(typeof Lenis==='undefined'){console.warn('Lenis not loaded');return;}
+const lenis=new Lenis({duration:1.2,easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t)),orientation:'vertical',smoothWheel:true,touchInertiaMultiplier:2});
+lenis.on('scroll',ScrollTrigger.update);
+gsap.ticker.add((time)=>{lenis.raf(time*1000);});
+gsap.ticker.lagSmoothing(0);
+window.lenis=lenis;
+})();
+
+// === GSAP + SCROLLTRIGGER SETUP ===
+(function(){
+if(typeof gsap==='undefined')return;
+gsap.registerPlugin(ScrollTrigger);
+
+// Force ScrollTrigger refresh after layout settles
+setTimeout(()=>ScrollTrigger.refresh(),100);
+
+// Entrance animation
+const heroTl=gsap.timeline({delay:0.2});
+heroTl.to('#hero',{opacity:1,duration:0.01});
+
+// Hero title split animation
+const heroTitle=document.querySelector('.hero-title');
+if(heroTitle&&typeof SplitType!=='undefined'){
+const st=new SplitType(heroTitle,{types:'chars'});
+heroTl.from(st.chars,{
+yPercent:100,
+opacity:0,
+stagger:0.025,
+duration:1.1,
+ease:'power4.out'
+},'-=0.1');
+}
+heroTl.from('.hero-subtitle',{y:25,opacity:0,duration:0.9,ease:'power3.out'},'-=0.5');
+heroTl.from('.scroll-indicator',{opacity:0,duration:0.8,ease:'power2.out'},'-=0.3');
+
+// About section animations
+const aboutTitle=document.querySelector('.about-title');
+if(aboutTitle&&typeof SplitType!=='undefined'){
+const st2=new SplitType(aboutTitle,{types:'chars'});
+gsap.from(st2.chars,{
+yPercent:80,
+opacity:0,
+stagger:0.02,
+duration:0.9,
+ease:'power3.out',
+scrollTrigger:{
+trigger:aboutTitle,
+start:'top 80%',
+toggleActions:'play none none reverse'
+}
+});
+}
+gsap.from('.about-text',{
+y:30,opacity:0,duration:0.8,ease:'power3.out',
+scrollTrigger:{trigger:'.about-text',start:'top 85%',toggleActions:'play none none reverse'}
+});
+gsap.from('.about-detail-item',{
+y:20,opacity:0,duration:0.6,stagger:0.1,ease:'power2.out',
+scrollTrigger:{trigger:'.about-details',start:'top 90%',toggleActions:'play none none reverse'}
+});
+
+// Horizontal scroll projects
+const projectsTrack=document.getElementById('projectsTrack');
+if(projectsTrack){
+const trackWidth=projectsTrack.scrollWidth-window.innerWidth;
+if(trackWidth>0){
+gsap.to(projectsTrack,{
+x:-trackWidth,
+ease:'none',
+scrollTrigger:{
+trigger:'.projects-section',
+start:'top top',
+end:trackWidth,
+pin:'.projects-sticky',
+scrub:1.2,
+invalidateOnRefresh:true
+}
+});
+}
+}
+
+gsap.from('.projects-header h2',{
+y:20,opacity:0,duration:0.6,ease:'power2.out',
+scrollTrigger:{trigger:'.projects-header',start:'top 90%',toggleActions:'play none none reverse'}
+});
+
+// Contact section animations
+const contactTitle=document.querySelector('.contact-title');
+if(contactTitle&&typeof SplitType!=='undefined'){
+const st3=new SplitType(contactTitle,{types:'chars'});
+gsap.from(st3.chars,{
+yPercent:80,
+opacity:0,
+stagger:0.02,
+duration:0.8,
+ease:'power3.out',
+scrollTrigger:{
+trigger:contactTitle,
+start:'top 80%',
+toggleActions:'play none none reverse'
+}
+});
+}
+gsap.from('.contact-text',{
+y:30,opacity:0,duration:0.7,ease:'power3.out',
+scrollTrigger:{trigger:'.contact-text',start:'top 85%',toggleActions:'play none none reverse'}
+});
+gsap.from('.contact-actions .magnetic-wrap',{
+y:20,opacity:0,stagger:0.15,duration:0.6,ease:'power2.out',
+scrollTrigger:{trigger:'.contact-actions',start:'top 90%',toggleActions:'play none none reverse'}
+});
+gsap.from('.contact-links a',{
+y:10,opacity:0,stagger:0.08,duration:0.5,ease:'power2.out',
+scrollTrigger:{trigger:'.contact-links',start:'top 95%',toggleActions:'play none none reverse'}
+});
+
+ScrollTrigger.refresh();
+})();
+
+// === MAGNETIC BUTTONS ===
+if(!isTouch){
+(function(){
+const btns=document.querySelectorAll('.magnetic-btn');
+btns.forEach(btn=>{
+btn.addEventListener('mousemove',e=>{
+const rect=btn.getBoundingClientRect();
+const x=e.clientX-rect.left-rect.width/2;
+const y=e.clientY-rect.top-rect.height/2;
+gsap.to(btn,{x:x*0.35,y:y*0.35,duration:0.6,ease:'power3.out',overwrite:'auto'});
+});
+btn.addEventListener('mouseleave',()=>{
+gsap.to(btn,{x:0,y:0,duration:0.7,ease:'elastic.out(1,0.3)',overwrite:'auto'});
+});
+});
+})();
+}
+
+// === PARALLAX ON HERO ===
+if(!isTouch){
+(function(){
+const heroTitle=document.querySelector('.hero-title');
+const heroSub=document.querySelector('.hero-subtitle');
+if(heroTitle||heroSub){
+document.addEventListener('mousemove',e=>{
+const x=(e.clientX/window.innerWidth-0.5);
+const y=(e.clientY/window.innerHeight-0.5);
+if(heroTitle)gsap.to(heroTitle,{x:x*15,y:y*10,duration:1.2,ease:'power2.out',overwrite:'auto'});
+if(heroSub)gsap.to(heroSub,{x:x*8,y:y*5,duration:1.2,ease:'power2.out',overwrite:'auto'});
+});
+}
+})();
+}
+
+// === PARALLAX ON SCROLL ===
+(function(){
+gsap.to('.hero-title',{
+y:()=>window.innerHeight*0.15,
+ease:'none',
+scrollTrigger:{
+trigger:'.hero',
+start:'top top',
+end:'bottom top',
+scrub:1,
+invalidateOnRefresh:true
+}
+});
+gsap.to('.hero-subtitle',{
+y:()=>window.innerHeight*0.08,
+ease:'none',
+scrollTrigger:{
+trigger:'.hero',
+start:'top top',
+end:'bottom top',
+scrub:1,
+invalidateOnRefresh:true
+}
+});
+gsap.to('.scroll-indicator',{
+opacity:0,
+ease:'none',
+scrollTrigger:{
+trigger:'.hero',
+start:'top top',
+end:'bottom top',
+scrub:1,
+invalidateOnRefresh:true
+}
+});
+})();
+
+// === PROJECT CARD TILT ===
+if(!isTouch&&typeof VanillaTilt!=='undefined'){
+try{
+VanillaTilt.init(document.querySelectorAll('.project-card'),{
+max:3,
+speed:400,
+scale:1.02,
+glare:false
+});
+}catch(e){}
+}
+
+console.log('%c Shubhum Joshi %c Portfolio 2024 ','background:#0a0a0a;color:#fff;padding:8px 12px;font-size:14px;font-family:monospace','background:#fff;color:#0a0a0a;padding:8px 12px;font-size:14px;font-family:monospace');
+
+})();
+</script>
+</body>
+</html>
