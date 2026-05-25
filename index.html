@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shubhum Joshi — Portfolio</title>
+<title>Shubhum Joshi — Freelance Web Developer &amp; AI Builder | Hong Kong</title>
+<meta name="description" content="17-year-old freelance web developer and AI tools builder based in Hong Kong. Building modern websites and AI-powered tools for clients worldwide.">
+<meta property="og:title" content="Shubhum Joshi — Freelance Web Developer &amp; AI Builder | Hong Kong">
+<meta property="og:description" content="17-year-old freelance web developer and AI tools builder based in Hong Kong. Building modern websites and AI-powered tools for clients worldwide.">
+<meta property="og:url" content="https://shubhumjosh-eng.github.io/portfolio">
+<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -117,6 +122,8 @@ footer .footer-links a{font-size:0.65rem;color:#999;text-decoration:none;letter-
 footer .footer-links a:hover{color:#ccc}
 
 [data-cursor-hover]{cursor:none}
+.skip-link{position:fixed;top:-100%;left:1rem;z-index:100001;padding:0.5rem 1rem;background:#fff;color:#0a0a0a;font-size:0.75rem;text-decoration:none;transition:top 0.2s}
+.skip-link:focus{top:1rem}
 
 @media(max-width:768px){
 body{cursor:auto}
@@ -140,6 +147,8 @@ footer{padding:2rem 6vw;flex-direction:column;text-align:center}
 </head>
 <body class="loading">
 
+<a href="#main-content" class="skip-link">Skip to content</a>
+
 <div class="preloader" id="preloader"><div class="preloader-inner"></div></div>
 
 <canvas id="blob-canvas"></canvas>
@@ -149,7 +158,7 @@ footer{padding:2rem 6vw;flex-direction:column;text-align:center}
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<main>
+<main id="main-content">
 <section class="hero" id="hero">
 <div class="hero-label">Shubhum Joshi</div>
 <h1 class="hero-title">Digital<br>Architect</h1>
@@ -168,9 +177,9 @@ footer{padding:2rem 6vw;flex-direction:column;text-align:center}
 </div>
 </section>
 
-<section class="marquee"><div class="marquee-track" id="marqueeTrack"><span>Web Development</span><span>AI Tools</span><span>UI/UX Design</span><span>Web Development</span><span>AI Tools</span><span>UI/UX Design</span></div></section>
+<section class="marquee"><div class="marquee-track" id="marqueeTrack"><span>Web Development</span><span>AI Tools</span><span>UI/UX Design</span><span aria-hidden="true">·</span><span aria-hidden="true">Web Development</span><span aria-hidden="true">AI Tools</span><span aria-hidden="true">UI/UX Design</span></div></section>
 
-<section class="projects-section" id="projects">
+<section class="projects-section" id="work">
 <div class="projects-header">
 <span class="section-number">01</span>
 <h2>Selected Work</h2>
@@ -219,13 +228,19 @@ footer{padding:2rem 6vw;flex-direction:column;text-align:center}
 <div class="magnetic-wrap">
 <a href="mailto:hello@shubhumjoshi.com" class="magnetic-btn" data-cursor-hover>
 <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13L2 4"/></svg>
-Get in touch
+Email
 </a>
 </div>
 <div class="magnetic-wrap">
-<a href="https://youtube-hook-generator2.vercel.app" class="magnetic-btn" data-cursor-hover target="_blank" rel="noopener">
-<svg viewBox="0 0 24 24"><path d="M10 15L15.19 12L10 9V15Z"/><circle cx="12" cy="12" r="10"/></svg>
-View projects
+<a href="https://github.com/shubhumjosh-eng" class="magnetic-btn" data-cursor-hover target="_blank" rel="noopener">
+<svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+GitHub
+</a>
+</div>
+<div class="magnetic-wrap">
+<a href="#" class="magnetic-btn" data-cursor-hover>
+<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+Fiverr
 </a>
 </div>
 </div>
@@ -238,7 +253,7 @@ View projects
 </section>
 
 <footer>
-<p>&copy; 2024 Shubhum Joshi · Built with code &amp; curiosity</p>
+<p id="copyright"></p>
 <div class="footer-links">
 <a href="https://github.com/shubhumjosh-eng" target="_blank" rel="noopener">GitHub</a>
 <a href="https://sanctuary-yoga.vercel.app" target="_blank" rel="noopener">Sanctuary</a>
@@ -265,13 +280,17 @@ document.body.classList.remove('loading');
 if(document.readyState==='complete'){setTimeout(hide,400)}
 else{window.addEventListener('load',function(){setTimeout(hide,400)})}
 setTimeout(hide,2500);// safety net
-// If GSAP isn't loaded after preloader hides, make hero visible
 setTimeout(function(){
 if(typeof gsap==='undefined'){
 var h=document.getElementById('hero');
 if(h)h.style.opacity='1';
 }
 },3000);
+// Dynamic copyright year
+(function(){
+var el=document.getElementById('copyright');
+if(el)el.textContent='\u00a9 '+new Date().getFullYear()+' Shubhum Joshi \u00b7 Built with code & curiosity';
+})();
 })();
 </script>
 
@@ -478,8 +497,6 @@ window.lenis=lenis;
 (function(){
 const track=document.getElementById('marqueeTrack');
 if(!track)return;
-const clone=track.innerHTML;
-track.innerHTML+=clone;
 let x=0;
 const speed=0.4;
 function animMarquee(){
@@ -686,7 +703,7 @@ glare:false
 }catch(e){}
 }
 
-console.log('%c Shubhum Joshi %c Portfolio 2024 ','background:#0a0a0a;color:#fff;padding:8px 12px;font-size:14px;font-family:monospace','background:#fff;color:#0a0a0a;padding:8px 12px;font-size:14px;font-family:monospace');
+console.log('%c Shubhum Joshi %c Portfolio '+new Date().getFullYear()+' ','background:#0a0a0a;color:#fff;padding:8px 12px;font-size:14px;font-family:monospace','background:#fff;color:#0a0a0a;padding:8px 12px;font-size:14px;font-family:monospace');
 
 })();
 </script>
