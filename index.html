@@ -15,6 +15,9 @@
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="//unpkg.com">
 <style>
+:root{--pad-x:1.25rem}
+@media(min-width:768px){:root{--pad-x:3rem}}
+@media(min-width:1280px){:root{--pad-x:5rem}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
 body{background:#111;color:#e8e8e8;font-family:'Space Grotesk',sans-serif;overflow-x:hidden;cursor:none;width:100%}
@@ -46,19 +49,19 @@ main{position:relative;z-index:1;width:100%}
 
 section{position:relative;width:100%}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative;opacity:0}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad-x);position:relative;opacity:0}
 .hero-label{font-size:clamp(0.7rem,0.8vw,1rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#aaa;margin-bottom:2rem}
 .hero-title{font-size:clamp(2.5rem,8vw,8rem);font-weight:300;line-height:1.05;letter-spacing:-0.03em;color:#fff;margin-bottom:1rem}
 .hero-title .char{display:inline-block;will-change:transform}
 .hero-subtitle{font-size:clamp(0.9rem,1.2vw,1.4rem);font-weight:300;color:#e0e0e0;letter-spacing:0.02em;line-height:1.6;max-width:40em;margin-top:1.5rem}
 .hero-subtitle span{color:#eee}
 
-.scroll-indicator{position:absolute;bottom:5vh;left:8vw;display:flex;align-items:center;gap:1rem;opacity:0.3}
+.scroll-indicator{position:absolute;bottom:5vh;left:var(--pad-x);display:flex;align-items:center;gap:1rem;opacity:0.3}
 .scroll-indicator span{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.25em;color:#ccc}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,#888,transparent);animation:scrollPulse 2s ease-in-out infinite}
 @keyframes scrollPulse{0%{transform:scaleY(0.3);opacity:0.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0.3);opacity:0.3}}
 
-.about{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh 8vw}
+.about{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x)}
 .about-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999;margin-bottom:2rem}
 .about-title{font-size:clamp(1.8rem,4vw,4.5rem);font-weight:300;line-height:1.2;letter-spacing:-0.02em;color:#fff;max-width:12em;margin-bottom:2.5rem}
 .about-title .char,.section-title .char{display:inline-block;will-change:transform}
@@ -70,11 +73,11 @@ section{position:relative;width:100%}
 .about-detail-value{font-size:1.1rem;font-weight:400;color:#ddd}
 
 .projects-section{position:relative;height:100vh;padding:0}
-.projects-header{position:absolute;top:8vh;left:8vw;z-index:10;display:flex;align-items:baseline;gap:2rem}
+.projects-header{position:absolute;top:8vh;left:var(--pad-x);z-index:10;display:flex;align-items:baseline;gap:2rem}
 .projects-header .section-number{font-size:0.65rem;font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999}
 .projects-header h2{font-size:clamp(1.4rem,2.5vw,3rem);font-weight:300;color:#fff;letter-spacing:-0.02em}
 .projects-sticky{position:relative;height:100vh;width:100%;overflow:hidden;display:flex;align-items:center}
-.projects-track{display:flex;gap:4vw;padding:0 8vw;will-change:transform}
+.projects-track{display:flex;gap:4vw;padding:0 var(--pad-x);will-change:transform}
 .project-card{min-width:80vw;max-width:80vw;height:55vh;position:relative;border-radius:0;overflow:hidden;background:#181818;display:flex;flex-direction:column;justify-content:flex-end;padding:3rem;cursor:pointer;border:1px solid rgba(255,255,255,0.06);transition:border-color 0.4s}
 .project-card:hover{border-color:rgba(255,255,255,0.1)}
 .project-card-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
@@ -93,9 +96,10 @@ section{position:relative;width:100%}
 .project-card-link:hover svg{transform:translate(3px,-2px)}
 
 .marquee{height:25vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04)}
-.marquee-track{display:flex;gap:4rem;white-space:nowrap;will-change:transform;padding:0 4rem}
+.marquee-track{display:flex;gap:4rem;white-space:nowrap;will-change:transform;padding:0 var(--pad-x)}
 .marquee-track span{font-size:clamp(2.5rem,5vw,5rem);font-weight:200;color:rgba(255,255,255,0.1);letter-spacing:-0.02em}
 .marquee-track span::after{content:'\00b7';margin:0 2rem;color:rgba(255,255,255,0.15)}
+.contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x)}
 .contact-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999;margin-bottom:2rem}
 .contact-title{font-size:clamp(2rem,5vw,5.5rem);font-weight:300;line-height:1.1;letter-spacing:-0.03em;color:#fff;max-width:8em;margin-bottom:0.5rem}
 .contact-title .char{display:inline-block;will-change:transform}
@@ -115,7 +119,7 @@ section{position:relative;width:100%}
 .contact-link:hover{color:#fff}
 .contact-link:hover::after{width:100%}
 
-footer{padding:3rem 8vw;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer{padding:3rem var(--pad-x);border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 footer p{font-size:0.7rem;color:#888;letter-spacing:0.05em}
 footer .footer-links{display:flex;gap:1.5rem}
 footer .footer-links a{font-size:0.65rem;color:#999;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
@@ -128,20 +132,20 @@ footer .footer-links a:hover{color:#ccc}
 @media(max-width:768px){
 body{cursor:auto}
 .cursor-dot,.cursor-ring{display:none!important}
-.hero{padding:0 6vw;min-height:100dvh}
+.hero{padding:0 var(--pad-x);min-height:100dvh}
 .hero-title{font-size:clamp(2rem,12vw,4rem)}
 .hero-subtitle{font-size:clamp(0.8rem,3vw,1rem)}
-.about{padding:8vh 6vw}
+.about{padding:8vh var(--pad-x)}
 .about-title{font-size:clamp(1.5rem,7vw,2.5rem)}
 .about-details{gap:2rem}
-.projects-track{gap:6vw;padding:0 6vw}
+.projects-track{gap:6vw;padding:0 var(--pad-x)}
 .project-card{min-width:88vw;max-width:88vw;padding:2rem}
 .project-card-name{font-size:clamp(1.2rem,5vw,1.8rem)}
-.contact{padding:8vh 6vw}
+.contact{padding:8vh var(--pad-x)}
 .contact-title{font-size:clamp(1.8rem,8vw,3rem)}
 .contact-actions{gap:1rem}
 .magnetic-btn{padding:0.8rem 1.8rem;font-size:0.75rem}
-footer{padding:2rem 6vw;flex-direction:column;text-align:center}
+footer{padding:2rem var(--pad-x);flex-direction:column;text-align:center}
 }
 </style>
 </head>
