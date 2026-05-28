@@ -178,6 +178,18 @@ footer p{font-size:0.6rem}
 .noise-overlay::before{animation:none!important}
 .noise-overlay{opacity:0.02!important}
 }
+
+@media(hover:none) and (pointer:coarse){
+.project-card:hover{border-color:rgba(255,255,255,0.06)}
+.project-card:hover .project-card-bg{transform:none}
+.magnetic-btn:hover{color:#fff;border-color:rgba(255,255,255,0.15)}
+.magnetic-btn:hover::before{transform:scaleX(0)}
+.project-card-link:hover{color:#d4d4d4}
+.project-card-link:hover svg{transform:none}
+.contact-link:hover{color:#999}
+.contact-link:hover::after{width:0}
+footer .footer-links a:hover{color:#999}
+}
 </style>
 </head>
 <body class="loading">
@@ -314,7 +326,8 @@ document.body.classList.remove('loading');
 };
 if(document.readyState==='complete'){setTimeout(hide,400)}
 else{window.addEventListener('load',function(){setTimeout(hide,400)})}
-setTimeout(hide,2500);// safety net
+const isMobileTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+setTimeout(hide, isMobileTouch ? 1200 : 2500);// safety net
 setTimeout(function(){
 if(typeof gsap==='undefined'){
 var h=document.getElementById('hero');
@@ -519,7 +532,8 @@ cursorAnim();
 })();
 }
 
-// === LENIS SMOOTH SCROLL ===
+// === LENIS SMOOTH SCROLL (disabled on phone — native scroll is smoother) ===
+if(!isPhone){
 (function(){
 if(typeof Lenis==='undefined'){console.warn('Lenis not loaded');return;}
 const lenis=new Lenis({duration:1.2,easing:(t)=>Math.min(1,1.001-Math.pow(2,-10*t)),orientation:'vertical',smoothWheel:true,touchInertiaMultiplier:2});
@@ -528,6 +542,7 @@ gsap.ticker.add((time)=>{lenis.raf(time*1000);});
 gsap.ticker.lagSmoothing(0);
 window.lenis=lenis;
 })();
+}
 
 // === MARQUEE SCROLL ===
 (function(){
@@ -548,6 +563,7 @@ animMarquee();
 // === GSAP + SCROLLTRIGGER SETUP ===
 (function(){
 if(typeof gsap==='undefined')return;
+if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
 gsap.registerPlugin(ScrollTrigger);
 
 // Force ScrollTrigger refresh after layout settles
@@ -560,6 +576,9 @@ heroTl.to('#hero',{opacity:1,duration:0.01});
 // Hero title split animation
 const heroTitle=document.querySelector('.hero-title');
 if(heroTitle&&typeof SplitType!=='undefined'){
+if(isPhone){
+heroTl.from(heroTitle,{y:20,opacity:0,duration:0.6,ease:'power2.out'},'-=0.1');
+}else{
 const st=new SplitType(heroTitle,{types:'chars'});
 heroTl.from(st.chars,{
 yPercent:100,
@@ -569,12 +588,16 @@ duration:1.1,
 ease:'power4.out'
 },'-=0.1');
 }
+}
 heroTl.from('.hero-subtitle',{y:25,opacity:0,duration:0.9,ease:'power3.out'},'-=0.5');
 heroTl.from('.scroll-indicator',{opacity:0,duration:0.8,ease:'power2.out'},'-=0.3');
 
 // About section animations
 const aboutTitle=document.querySelector('.about-title');
 if(aboutTitle&&typeof SplitType!=='undefined'){
+if(isPhone){
+gsap.from(aboutTitle,{y:20,opacity:0,duration:0.6,ease:'power2.out',scrollTrigger:{trigger:aboutTitle,start:'top 85%',toggleActions:'play none none reverse'}});
+}else{
 const st2=new SplitType(aboutTitle,{types:'chars'});
 gsap.from(st2.chars,{
 yPercent:80,
@@ -588,6 +611,7 @@ start:'top 80%',
 toggleActions:'play none none reverse'
 }
 });
+}
 }
 gsap.from('.about-text',{
 y:30,opacity:0,duration:0.8,ease:'power3.out',
@@ -626,6 +650,9 @@ scrollTrigger:{trigger:'.projects-header',start:'top 90%',toggleActions:'play no
 // Contact section animations
 const contactTitle=document.querySelector('.contact-title');
 if(contactTitle&&typeof SplitType!=='undefined'){
+if(isPhone){
+gsap.from(contactTitle,{y:20,opacity:0,duration:0.6,ease:'power2.out',scrollTrigger:{trigger:contactTitle,start:'top 85%',toggleActions:'play none none reverse'}});
+}else{
 const st3=new SplitType(contactTitle,{types:'chars'});
 gsap.from(st3.chars,{
 yPercent:80,
@@ -639,6 +666,7 @@ start:'top 80%',
 toggleActions:'play none none reverse'
 }
 });
+}
 }
 gsap.from('.contact-text',{
 y:30,opacity:0,duration:0.7,ease:'power3.out',
@@ -691,6 +719,7 @@ if(heroSub)gsap.to(heroSub,{x:x*8,y:y*5,duration:1.2,ease:'power2.out',overwrite
 }
 
 // === PARALLAX ON SCROLL ===
+if(!isPhone){
 (function(){
 gsap.to('.hero-title',{
 y:()=>window.innerHeight*0.15,
@@ -726,6 +755,7 @@ invalidateOnRefresh:true
 }
 });
 })();
+}
 
 // === PROJECT CARD TILT ===
 if(!isTouch&&typeof VanillaTilt!=='undefined'){
