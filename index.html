@@ -161,22 +161,32 @@ footer{padding:2rem var(--pad-x);flex-direction:column;text-align:center}
 .projects-section{height:auto;min-height:auto}
 .projects-sticky{height:auto;overflow:visible}
 .projects-header{position:relative;top:auto;left:var(--pad-x);padding-top:4vh}
-.projects-track{flex-direction:column;gap:1.5rem;padding:0 var(--pad-x)}
+.projects-track{flex-direction:column;gap:2rem;padding:0 var(--pad-x);will-change:auto}
 .project-card{min-width:100%;max-width:100%;height:auto;padding:1.5rem}
 .project-card-name{font-size:clamp(1.1rem,5vw,1.4rem)}
-.project-card-description{font-size:clamp(0.75rem,3.5vw,0.85rem)}
+.project-card-description{font-size:clamp(0.8rem,3.5vw,0.9rem)}
 .marquee{height:15vh}
+.marquee-track{will-change:auto}
 .marquee-track span{font-size:clamp(2rem,8vw,3rem)}
 .contact{min-height:auto;padding:6vh var(--pad-x)}
 .contact-title{font-size:clamp(1.5rem,7vw,2.2rem)}
 .contact-text{font-size:clamp(0.85rem,3.5vw,0.95rem)}
-.magnetic-btn{min-height:44px;padding:0.7rem 1.5rem;font-size:0.7rem}
-.contact-links{gap:1rem;margin-top:2rem;flex-wrap:wrap}
-.contact-link{padding:8px 0;font-size:0.7rem}
+.contact-actions{flex-direction:column;width:100%}
+.magnetic-wrap{width:100%}
+.magnetic-btn{min-height:48px;padding:0.8rem 1.5rem;font-size:0.75rem;width:100%;justify-content:center}
+.magnetic-btn:active{background:#fff;color:#0a0a0a;border-color:#fff}
+.contact-links{flex-direction:column;gap:0.75rem;margin-top:2rem}
+.contact-link{padding:10px 0;font-size:0.7rem}
+.contact-link:active{color:#fff}
+.project-card:active{border-color:rgba(255,255,255,0.15)}
+.project-card-link:active{color:#fff}
+.project-card-link:active svg{transform:translate(3px,-2px)}
 footer{padding:1.5rem var(--pad-x)}
 footer p{font-size:0.6rem}
+footer .footer-links a:active{color:#ccc}
 .noise-overlay::before{animation:none!important}
 .noise-overlay{opacity:0.02!important}
+*{-webkit-tap-highlight-color:rgba(255,255,255,0.08)}
 }
 
 @media(hover:none) and (pointer:coarse){
@@ -366,7 +376,7 @@ document.getElementById('noiseOverlay').style.backgroundImage='url('+c.toDataURL
 
 // === THREE.JS BLOB ===
 (function(){
-if(typeof THREE==='undefined')return;
+if(typeof THREE==='undefined'||isPhone)return;
 const canvas=document.getElementById('blob-canvas');
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight,0.1,10);
