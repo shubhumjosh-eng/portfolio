@@ -316,6 +316,8 @@ Fiverr
 <a href="https://github.com/shubhumjosh-eng" target="_blank" rel="noopener">GitHub</a>
 <a href="https://sanctuary-yoga.vercel.app" target="_blank" rel="noopener">Sanctuary</a>
 <a href="https://youtube-hook-generator2.vercel.app" target="_blank" rel="noopener">Hook Gen</a>
+<a href="terms.html">Terms</a>
+<a href="privacy.html">Privacy</a>
 </div>
 </footer>
 </main>
@@ -345,6 +347,11 @@ if(el)el.textContent='\u00a9 '+new Date().getFullYear()+' Shubhum Joshi \u00b7 B
 
 window.__isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 window.__isPhone = window.__isTouch && window.innerWidth < 480;
+if(window.__isPhone){
+var el=document.getElementById('blob-canvas');if(el)el.remove();
+var el2=document.getElementById('cursorDot');if(el2)el2.remove();
+var el3=document.getElementById('cursorRing');if(el3)el3.remove();
+}
 window.__ready = false;
 window.__onReady = null;
 
