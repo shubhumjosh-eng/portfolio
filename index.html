@@ -9,6 +9,7 @@
 <meta property="og:description" content="17-year-old freelance web developer and AI tools builder based in Hong Kong. Building modern websites and AI-powered tools for clients worldwide.">
 <meta property="og:url" content="https://shubhumjosh-eng.github.io/portfolio">
 <meta property="og:type" content="website">
+<meta name="theme-color" content="#111">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -61,7 +62,7 @@ section{position:relative;width:100%}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,#888,transparent);animation:scrollPulse 2s ease-in-out infinite}
 @keyframes scrollPulse{0%{transform:scaleY(0.3);opacity:0.3}50%{transform:scaleY(1);opacity:1}100%{transform:scaleY(0.3);opacity:0.3}}
 
-.about{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x)}
+.about{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x);content-visibility:auto;contain-intrinsic-size:auto 100vh}
 .about-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999;margin-bottom:2rem}
 .about-title{font-size:clamp(1.8rem,4vw,4.5rem);font-weight:300;line-height:1.2;letter-spacing:-0.02em;color:#fff;max-width:12em;margin-bottom:2.5rem}
 .about-title .char,.section-title .char{display:inline-block;will-change:transform}
@@ -72,7 +73,7 @@ section{position:relative;width:100%}
 .about-detail-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.2em;color:#999}
 .about-detail-value{font-size:1.1rem;font-weight:400;color:#ddd}
 
-.projects-section{position:relative;height:100vh;padding:0}
+.projects-section{position:relative;height:100vh;padding:0;content-visibility:auto;contain-intrinsic-size:auto 100vh}
 .projects-header{position:absolute;top:8vh;left:var(--pad-x);z-index:10;display:flex;align-items:baseline;gap:2rem}
 .projects-header .section-number{font-size:0.65rem;font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999}
 .projects-header h2{font-size:clamp(1.4rem,2.5vw,3rem);font-weight:300;color:#fff;letter-spacing:-0.02em}
@@ -95,11 +96,11 @@ section{position:relative;width:100%}
 .project-card-link svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;transition:transform 0.3s}
 .project-card-link:hover svg{transform:translate(3px,-2px)}
 
-.marquee{height:25vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04)}
+.marquee{height:25vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);content-visibility:auto;contain-intrinsic-size:auto 25vh}
 .marquee-track{display:flex;gap:4rem;white-space:nowrap;will-change:transform;padding:0 var(--pad-x)}
 .marquee-track span{font-size:clamp(2.5rem,5vw,5rem);font-weight:200;color:rgba(255,255,255,0.1);letter-spacing:-0.02em}
 .marquee-track span::after{content:'\00b7';margin:0 2rem;color:rgba(255,255,255,0.15)}
-.contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x)}
+.contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x);content-visibility:auto;contain-intrinsic-size:auto 100vh}
 .contact-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999;margin-bottom:2rem}
 .contact-title{font-size:clamp(2rem,5vw,5.5rem);font-weight:300;line-height:1.1;letter-spacing:-0.03em;color:#fff;max-width:8em;margin-bottom:0.5rem}
 .contact-title .char{display:inline-block;will-change:transform}
@@ -119,7 +120,7 @@ section{position:relative;width:100%}
 .contact-link:hover{color:#fff}
 .contact-link:hover::after{width:100%}
 
-footer{padding:3rem var(--pad-x);border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer{padding:3rem var(--pad-x);border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;content-visibility:auto;contain-intrinsic-size:auto 120px}
 footer p{font-size:0.7rem;color:#888;letter-spacing:0.05em}
 footer .footer-links{display:flex;gap:1.5rem}
 footer .footer-links a{font-size:0.65rem;color:#999;text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
@@ -154,21 +155,21 @@ footer{padding:2rem var(--pad-x);flex-direction:column;text-align:center}
 .hero-title{font-size:clamp(1.8rem,10vw,2.5rem)}
 .hero-subtitle{font-size:clamp(0.8rem,3.5vw,0.9rem)}
 .scroll-indicator{display:none}
-.about{min-height:auto;padding:6vh var(--pad-x)}
+.about{min-height:auto;padding:6vh var(--pad-x);content-visibility:visible}
 .about-title{font-size:clamp(1.3rem,6vw,1.8rem)}
 .about-text{font-size:clamp(0.85rem,3.5vw,0.95rem)}
 .about-details{gap:1.5rem;margin-top:2rem}
-.projects-section{height:auto;min-height:auto}
+.projects-section{height:auto;min-height:auto;content-visibility:visible}
 .projects-sticky{height:auto;overflow:visible}
 .projects-header{position:relative;top:auto;left:var(--pad-x);padding-top:4vh}
 .projects-track{flex-direction:column;gap:2rem;padding:0 var(--pad-x);will-change:auto}
 .project-card{min-width:100%;max-width:100%;height:auto;padding:1.5rem}
 .project-card-name{font-size:clamp(1.1rem,5vw,1.4rem)}
 .project-card-description{font-size:clamp(0.8rem,3.5vw,0.9rem)}
-.marquee{height:15vh}
+.marquee{height:15vh;content-visibility:visible}
 .marquee-track{will-change:auto}
 .marquee-track span{font-size:clamp(2rem,8vw,3rem)}
-.contact{min-height:auto;padding:6vh var(--pad-x)}
+.contact{min-height:auto;padding:6vh var(--pad-x);content-visibility:visible}
 .contact-title{font-size:clamp(1.5rem,7vw,2.2rem)}
 .contact-text{font-size:clamp(0.85rem,3.5vw,0.95rem)}
 .contact-actions{flex-direction:column;width:100%}
@@ -181,7 +182,7 @@ footer{padding:2rem var(--pad-x);flex-direction:column;text-align:center}
 .project-card:active{border-color:rgba(255,255,255,0.15)}
 .project-card-link:active{color:#fff}
 .project-card-link:active svg{transform:translate(3px,-2px)}
-footer{padding:1.5rem var(--pad-x)}
+footer{padding:1.5rem var(--pad-x);content-visibility:visible}
 footer p{font-size:0.6rem}
 footer .footer-links a:active{color:#ccc}
 .noise-overlay::before{animation:none!important}
@@ -368,6 +369,7 @@ function initPortfolio(){
 
 // === NOISE OVERLAY ===
 (function(){
+if(isPhone)return;
 const c = document.createElement('canvas');
 c.width = 128;
 c.height = 128;
@@ -561,20 +563,26 @@ window.lenis=lenis;
 })();
 }
 
-// === MARQUEE SCROLL ===
+// === MARQUEE SCROLL (pauses when offscreen) ===
 (function(){
 const track=document.getElementById('marqueeTrack');
 if(!track)return;
-let x=0;
+let x=0, id=null;
 const speed=0.4;
 function animMarquee(){
 x-=speed;
 const half=track.scrollWidth/2;
 if(x<=-half)x+=half;
 track.style.transform='translateX('+x+'px)';
-requestAnimationFrame(animMarquee);
+id=requestAnimationFrame(animMarquee);
 }
-animMarquee();
+function start(){if(!id)id=requestAnimationFrame(animMarquee);}
+function stop(){if(id){cancelAnimationFrame(id);id=null;}}
+if(typeof IntersectionObserver!=='undefined'){
+var obs=new IntersectionObserver(function(e){e[0].isIntersecting?start():stop();},{threshold:0});
+obs.observe(track);
+start();
+}else{start()}
 })();
 
 // === GSAP + SCROLLTRIGGER SETUP ===
