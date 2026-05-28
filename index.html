@@ -319,15 +319,8 @@ Fiverr
 </footer>
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://unpkg.com/split-type@0.3.4/umd/index.js"></script>
-<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-
 <script>
-// === BOOT — ensures page is always readable regardless of other scripts ===
+// === BOOT + DYNAMIC SCRIPT LOADER ===
 (function(){
 const preloader=document.getElementById('preloader');
 const hide=function(){
@@ -337,27 +330,41 @@ document.body.classList.remove('loading');
 if(document.readyState==='complete'){setTimeout(hide,400)}
 else{window.addEventListener('load',function(){setTimeout(hide,400)})}
 const isMobileTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-setTimeout(hide, isMobileTouch ? 1200 : 2500);// safety net
+setTimeout(hide, isMobileTouch ? 1200 : 2500);
 setTimeout(function(){
 if(typeof gsap==='undefined'){
 var h=document.getElementById('hero');
 if(h)h.style.opacity='1';
 }
 },3000);
-// Dynamic copyright year
 (function(){
 var el=document.getElementById('copyright');
 if(el)el.textContent='\u00a9 '+new Date().getFullYear()+' Shubhum Joshi \u00b7 Built with code & curiosity';
+})();
+
+window.__isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+window.__isPhone = window.__isTouch && window.innerWidth < 480;
+window.__ready = false;
+window.__onReady = null;
+
+var scripts = window.__isPhone
+  ? ['https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js','https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js']
+  : ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js','https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js','https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js','https://unpkg.com/split-type@0.3.4/umd/index.js','https://unpkg.com/lenis@1.1.13/dist/lenis.min.js','https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js'];
+
+(function loadNext(){
+if(scripts.length===0){window.__ready=true;if(typeof window.__onReady==='function')window.__onReady();return;}
+var s=document.createElement('script');
+s.src=scripts.shift();
+s.onload=s.onerror=loadNext;
+document.body.appendChild(s);
 })();
 })();
 </script>
 
 <script>
-(function(){
+var isTouch = window.__isTouch, isPhone = window.__isPhone;
+function initPortfolio(){
 'use strict';
-
-const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-const isPhone = isTouch && window.innerWidth < 480;
 
 // === NOISE OVERLAY ===
 (function(){
@@ -781,7 +788,8 @@ glare:false
 
 console.log('%c Shubhum Joshi %c Portfolio '+new Date().getFullYear()+' ','background:#0a0a0a;color:#fff;padding:8px 12px;font-size:14px;font-family:monospace','background:#fff;color:#0a0a0a;padding:8px 12px;font-size:14px;font-family:monospace');
 
-})();
+}
+if(window.__ready)initPortfolio();else window.__onReady=initPortfolio;
 </script>
 </body>
 </html>
