@@ -147,6 +147,37 @@ body{cursor:auto}
 .magnetic-btn{padding:0.8rem 1.8rem;font-size:0.75rem}
 footer{padding:2rem var(--pad-x);flex-direction:column;text-align:center}
 }
+
+@media(max-width:480px){
+:root{--pad-x:1rem}
+.hero{min-height:100dvh}
+.hero-title{font-size:clamp(1.8rem,10vw,2.5rem)}
+.hero-subtitle{font-size:clamp(0.8rem,3.5vw,0.9rem)}
+.scroll-indicator{display:none}
+.about{min-height:auto;padding:6vh var(--pad-x)}
+.about-title{font-size:clamp(1.3rem,6vw,1.8rem)}
+.about-text{font-size:clamp(0.85rem,3.5vw,0.95rem)}
+.about-details{gap:1.5rem;margin-top:2rem}
+.projects-section{height:auto;min-height:auto}
+.projects-sticky{height:auto;overflow:visible}
+.projects-header{position:relative;top:auto;left:var(--pad-x);padding-top:4vh}
+.projects-track{flex-direction:column;gap:1.5rem;padding:0 var(--pad-x)}
+.project-card{min-width:100%;max-width:100%;height:auto;padding:1.5rem}
+.project-card-name{font-size:clamp(1.1rem,5vw,1.4rem)}
+.project-card-description{font-size:clamp(0.75rem,3.5vw,0.85rem)}
+.marquee{height:15vh}
+.marquee-track span{font-size:clamp(2rem,8vw,3rem)}
+.contact{min-height:auto;padding:6vh var(--pad-x)}
+.contact-title{font-size:clamp(1.5rem,7vw,2.2rem)}
+.contact-text{font-size:clamp(0.85rem,3.5vw,0.95rem)}
+.magnetic-btn{min-height:44px;padding:0.7rem 1.5rem;font-size:0.7rem}
+.contact-links{gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.contact-link{padding:8px 0;font-size:0.7rem}
+footer{padding:1.5rem var(--pad-x)}
+footer p{font-size:0.6rem}
+.noise-overlay::before{animation:none!important}
+.noise-overlay{opacity:0.02!important}
+}
 </style>
 </head>
 <body class="loading">
@@ -303,6 +334,7 @@ if(el)el.textContent='\u00a9 '+new Date().getFullYear()+' Shubhum Joshi \u00b7 B
 'use strict';
 
 const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+const isPhone = isTouch && window.innerWidth < 480;
 
 // === NOISE OVERLAY ===
 (function(){
@@ -328,7 +360,7 @@ const camera=new THREE.PerspectiveCamera(45,window.innerWidth/window.innerHeight
 camera.position.set(0,0,3.5);
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
 renderer.setSize(window.innerWidth,window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, isPhone ? 1 : 2));
 renderer.setClearColor(0x111111,0);
 
 const vertexShader=`
@@ -386,7 +418,7 @@ float alpha=0.75+0.15*fresnel+0.1*rim;
 gl_FragColor=vec4(col,alpha);
 }`;
 
-const geo=new THREE.IcosahedronGeometry(1.1,isTouch?3:5);
+const geo=new THREE.IcosahedronGeometry(1.1,isPhone?2:isTouch?3:5);
 const mat=new THREE.ShaderMaterial({
 uniforms:{
 uTime:{value:0},
@@ -403,7 +435,7 @@ blending:THREE.NormalBlending
 const mesh=new THREE.Mesh(geo,mat);
 scene.add(mesh);
 
-const pCount=isTouch?200:800;
+const pCount=isPhone?80:isTouch?200:800;
 const pGeo=new THREE.BufferGeometry();
 const pPos=new Float32Array(pCount*3);
 for(let i=0;i<pCount*3;i++)pPos[i]=(Math.random()-0.5)*10;
@@ -566,9 +598,9 @@ y:20,opacity:0,duration:0.6,stagger:0.1,ease:'power2.out',
 scrollTrigger:{trigger:'.about-details',start:'top 90%',toggleActions:'play none none reverse'}
 });
 
-// Horizontal scroll projects
+// Horizontal scroll projects (desktop only)
 const projectsTrack=document.getElementById('projectsTrack');
-if(projectsTrack){
+if(projectsTrack&&!isPhone){
 const trackWidth=projectsTrack.scrollWidth-window.innerWidth;
 if(trackWidth>0){
 gsap.to(projectsTrack,{
