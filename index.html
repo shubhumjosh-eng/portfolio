@@ -9,24 +9,45 @@
 <meta property="og:description" content="17-year-old freelance web developer and AI tools builder based in Hong Kong. Building modern websites and AI-powered tools for clients worldwide.">
 <meta property="og:url" content="https://shubhumjosh-eng.github.io/portfolio">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://shubhumjosh-eng.github.io/portfolio/og-image.svg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="author" content="Shubhum Joshi">
+<meta name="keywords" content="freelance web developer, AI tools builder, Hong Kong, web development, portfolio">
 <meta name="theme-color" content="#111">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
 <link rel="dns-prefetch" href="//unpkg.com">
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"Person",
+"name":"Shubhum Joshi",
+"givenName":"Shubhum",
+"familyName":"Joshi",
+"jobTitle":"Freelance Web Developer & AI Builder",
+"description":"17-year-old freelance web developer and AI tools builder based in Hong Kong. Building modern websites and AI-powered tools for clients worldwide.",
+"url":"https://shubhumjosh-eng.github.io/portfolio",
+"sameAs":["https://github.com/shubhumjosh-eng","https://www.fiverr.com/s/kLqDY4g"],
+"knowsAbout":["Web Development","AI Tools","UI/UX Design"]
+}
+</script>
 <style>
 :root{--pad-x:1.25rem}
 @media(min-width:768px){:root{--pad-x:3rem}}
 @media(min-width:1280px){:root{--pad-x:5rem}}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:auto}
-body{background:#111;color:#e8e8e8;font-family:'Space Grotesk',sans-serif;overflow-x:hidden;cursor:none;width:100%}
+body{background:#111;color:#e8e8e8;font-family:'Space Grotesk',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;overflow-x:hidden;cursor:none;width:100%}
 ::selection{background:rgba(255,255,255,0.15);color:#fff}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:#0a0a0a}
-::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
-::-webkit-scrollbar-thumb:hover{background:#333}
+::-webkit-scrollbar-thumb{background:#2a2a2a;border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:#444}
+:focus-visible{outline:1px solid rgba(255,255,255,0.3);outline-offset:3px}
+a:focus-visible,.magnetic-btn:focus-visible,.project-card-link:focus-visible,.contact-link:focus-visible{outline:1px solid rgba(255,255,255,0.3);outline-offset:3px}
 
 body.loading main{opacity:0}
 .preloader{position:fixed;inset:0;z-index:100000;background:#0a0a0a;display:flex;align-items:center;justify-content:center;pointer-events:none;transition:opacity 0.8s ease,visibility 0.8s ease}
@@ -84,7 +105,9 @@ section{position:relative;width:100%}
 .project-card-bg{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)}
 .project-card:hover .project-card-bg{transform:scale(1.05)}
 .project-card-bg-1{background:radial-gradient(ellipse at 30% 50%,#0a1628,#111 70%)}
+.project-card-bg-1::after{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:24px 24px;z-index:0}
 .project-card-bg-2{background:radial-gradient(ellipse at 70% 30%,#14101a,#111 70%)}
+.project-card-bg-2::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,255,255,0.012) 20px,rgba(255,255,255,0.012) 21px);z-index:0}
 .project-card-content{position:relative;z-index:1}
 .project-card-number{font-size:0.65rem;color:#888;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:0.5rem}
 .project-card-name{font-size:clamp(1.5rem,2.5vw,2.8rem);font-weight:300;color:#fff;margin-bottom:0.75rem;letter-spacing:-0.02em}
@@ -98,7 +121,7 @@ section{position:relative;width:100%}
 
 .marquee{height:25vh;display:flex;align-items:center;overflow:hidden;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);content-visibility:auto;contain-intrinsic-size:auto 25vh}
 .marquee-track{display:flex;gap:4rem;white-space:nowrap;will-change:transform;padding:0 var(--pad-x)}
-.marquee-track span{font-size:clamp(2.5rem,5vw,5rem);font-weight:200;color:rgba(255,255,255,0.1);letter-spacing:-0.02em}
+.marquee-track span{font-size:clamp(2.5rem,5vw,5rem);font-weight:200;color:rgba(255,255,255,0.15);letter-spacing:-0.02em}
 .marquee-track span::after{content:'\00b7';margin:0 2rem;color:rgba(255,255,255,0.15)}
 .contact{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:10vh var(--pad-x);content-visibility:auto;contain-intrinsic-size:auto 100vh}
 .contact-label{font-size:clamp(0.65rem,0.7vw,0.85rem);font-weight:400;text-transform:uppercase;letter-spacing:0.3em;color:#999;margin-bottom:2rem}
@@ -239,7 +262,7 @@ footer .footer-links a:hover{color:#999}
 <section class="hero" id="hero">
 <div class="hero-label">Shubhum Joshi</div>
 <h1 class="hero-title">Digital<br>Architect</h1>
-<p class="hero-subtitle">17 · Hong Kong <span>🇭🇰</span><br>Building websites &amp; AI tools for clients</p>
+<p class="hero-subtitle">17 · Hong Kong <span>🇭🇰</span> — Building websites &amp; AI tools for clients</p>
 <div class="scroll-indicator"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
@@ -326,6 +349,7 @@ Fiverr
 <a href="https://sanctuary-yoga.vercel.app" class="contact-link" target="_blank" rel="noopener">Sanctuary Yoga</a>
 <a href="https://youtube-hook-generator2.vercel.app" class="contact-link" target="_blank" rel="noopener">YouTube Hook Gen</a>
 <a href="mailto:shubhumjosh@gmail.com" class="contact-link">Email</a>
+<a href="#" class="contact-link" onclick="alert('Resume coming soon!');return false">Resume</a>
 </div>
 </section>
 
@@ -665,7 +689,7 @@ toggleActions:'play none none reverse'
 }
 }
 gsap.from('.about-text',{
-y:30,opacity:0,duration:0.8,ease:'power3.out',
+y:30,opacity:0,scale:0.98,duration:0.8,ease:'power2.out',
 scrollTrigger:{trigger:'.about-text',start:'top 85%',toggleActions:'play none none reverse'}
 });
 gsap.from('.about-detail-item',{
@@ -720,7 +744,7 @@ toggleActions:'play none none reverse'
 }
 }
 gsap.from('.contact-text',{
-y:30,opacity:0,duration:0.7,ease:'power3.out',
+y:25,opacity:0,scale:0.97,duration:0.8,ease:'power2.out',
 scrollTrigger:{trigger:'.contact-text',start:'top 85%',toggleActions:'play none none reverse'}
 });
 gsap.from('.contact-actions .magnetic-wrap',{
