@@ -190,6 +190,25 @@ footer .footer-links a:active{color:#ccc}
 *{-webkit-tap-highlight-color:rgba(255,255,255,0.08)}
 }
 
+@media(min-width:1920px){
+:root{--pad-x:8rem}
+.hero-title{font-size:clamp(2.5rem,6vw,10rem)}
+.hero-subtitle{font-size:clamp(0.9rem,0.9vw,1.6rem);max-width:50em}
+.about{padding:14vh var(--pad-x)}
+.about-title{font-size:clamp(1.8rem,3vw,5.5rem)}
+.contact{padding:14vh var(--pad-x)}
+.contact-title{font-size:clamp(2rem,3.5vw,7rem)}
+.project-card{min-width:65vw;max-width:65vw;padding:4rem}
+.project-card-name{font-size:clamp(1.5rem,2vw,3.2rem)}
+.project-card-description{font-size:clamp(0.75rem,0.8vw,1.1rem)}
+.marquee{height:20vh}
+.marquee-track span{font-size:clamp(2.5rem,4vw,6rem)}
+}
+
+@media(min-width:769px) and (max-width:1024px){
+.project-card{min-width:70vw;max-width:70vw}
+}
+
 @media(hover:none) and (pointer:coarse){
 .project-card:hover{border-color:rgba(255,255,255,0.06)}
 .project-card:hover .project-card-bg{transform:none}
@@ -457,7 +476,7 @@ float alpha=0.75+0.15*fresnel+0.1*rim;
 gl_FragColor=vec4(col,alpha);
 }`;
 
-const geo=new THREE.IcosahedronGeometry(1.1,isPhone?2:isTouch?3:5);
+const geo=new THREE.IcosahedronGeometry(1.1,isPhone?2:isTouch?3:6);
 const mat=new THREE.ShaderMaterial({
 uniforms:{
 uTime:{value:0},
