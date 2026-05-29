@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Resume — Shubhum Joshi</title>
+<meta name="robots" content="noindex">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#111;color:#ccc;font-family:'Space Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.7;padding:2rem}
+a{color:#e0e0e0;text-decoration:underline;text-underline-offset:3px}
+a:hover{color:#fff}
+h1{color:#fff;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;letter-spacing:-0.02em;margin-bottom:0.25rem}
+h2{color:#fff;font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:400;margin-top:2.5rem;margin-bottom:1rem;letter-spacing:0.02em;text-transform:uppercase;color:#aaa}
+h3{color:#fff;font-size:clamp(0.95rem,1.3vw,1.1rem);font-weight:400;margin-bottom:0.3rem}
+p{margin-bottom:0.75rem;color:#bbb;max-width:45em;font-size:clamp(0.85rem,1vw,0.95rem)}
+small{color:#888;font-size:0.75rem}
+hr{border:none;border-top:1px solid rgba(255,255,255,0.06);margin:2rem 0}
+.back{display:inline-flex;align-items:center;gap:0.4rem;color:#999;font-size:0.8rem;text-decoration:none;margin-bottom:2rem;text-transform:uppercase;letter-spacing:0.1em}
+.back:hover{color:#fff}
+.container{max-width:740px;margin:0 auto;padding:4vh 0}
+.title-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+.title-row .sub{color:#999;font-size:clamp(0.8rem,1.1vw,0.95rem);margin-top:0.25rem}
+.contact-row{display:flex;flex-wrap:wrap;gap:1.5rem;margin-bottom:2rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.06)}
+.contact-row a{color:#999;font-size:0.8rem;text-decoration:none;letter-spacing:0.05em;transition:color 0.3s}
+.contact-row a:hover{color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.skill-group{margin-bottom:1.5rem}
+.skill-group-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:#888;margin-bottom:0.6rem}
+.skill-tags{display:flex;flex-wrap:wrap;gap:0.4rem}
+.skill-tag{font-size:0.75rem;padding:0.25rem 0.7rem;border:1px solid rgba(255,255,255,0.08);color:#ccc;letter-spacing:0.03em}
+.project-item{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,0.04)}
+.project-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.project-item .meta{font-size:0.7rem;color:#888;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.3rem}
+.project-item p{font-size:clamp(0.8rem,0.95vw,0.9rem);color:#aaa;margin-bottom:0.5rem}
+.project-item .stack{display:flex;flex-wrap:wrap;gap:0.35rem}
+.project-item .stack span{font-size:0.65rem;padding:0.2rem 0.55rem;background:rgba(255,255,255,0.04);color:#999;letter-spacing:0.05em}
+.education-item{margin-bottom:1.2rem}
+.education-item .school{color:#ddd;font-size:0.95rem}
+.education-item .detail{font-size:0.8rem;color:#999}
+.download-btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.4rem;border:1px solid rgba(255,255,255,0.12);color:#e0e0e0;font-family:'Space Grotesk',sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:border-color 0.3s,color 0.3s;margin-top:2rem}
+.download-btn:hover{border-color:rgba(255,255,255,0.3);color:#fff}
+@media(max-width:480px){body{padding:1rem}.container{padding:2vh 0}.grid{grid-template-columns:1fr}.title-row{flex-direction:column}.contact-row{gap:0.8rem}}
+@media print{body{background:#fff;color:#333;padding:0}a{color:#333}.back{display:none!important}.download-btn{display:none!important}h1,h2,h3{color:#111}h2{color:#555}.skill-tag{border-color:#ddd;color:#333}.project-item .stack span{background:#f0f0f0;color:#555}.container{max-width:100%;padding:0}.contact-row{border-bottom-color:#ddd}.project-item{border-bottom-color:#eee}.education-item .school{color:#222}.education-item .detail{color:#666}.title-row .sub{color:#666}hr{border-top-color:#ddd}}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="back">&larr; Back to portfolio</a>
+
+<div class="title-row">
+<div>
+<h1>Shubhum Joshi</h1>
+<div class="sub">Freelance Web Developer &amp; AI Builder</div>
+</div>
+<button class="download-btn" onclick="window.print()">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+Download PDF
+</button>
+</div>
+
+<div class="contact-row">
+<a href="mailto:shubhumjosh@gmail.com">shubhumjosh@gmail.com</a>
+<a href="https://github.com/shubhumjosh-eng" target="_blank" rel="noopener">github.com/shubhumjosh-eng</a>
+<a href="https://shubhumjosh-eng.github.io/portfolio" target="_blank" rel="noopener">Portfolio</a>
+<span style="color:#888;font-size:0.8rem">Hong Kong</span>
+</div>
+
+<h2>Profile</h2>
+<p>17-year-old freelance web developer and AI tools builder based in Hong Kong. I build modern websites and AI-powered tools for clients worldwide, combining thoughtful design with robust engineering. Self-taught and passionate about pushing boundaries at the intersection of design and technology.</p>
+
+<h2>Skills</h2>
+<div class="grid">
+<div>
+<div class="skill-group">
+<div class="skill-group-label">Frontend</div>
+<div class="skill-tags">
+<span class="skill-tag">Next.js</span>
+<span class="skill-tag">React</span>
+<span class="skill-tag">TypeScript</span>
+<span class="skill-tag">JavaScript</span>
+<span class="skill-tag">Tailwind CSS</span>
+<span class="skill-tag">Three.js</span>
+<span class="skill-tag">GSAP</span>
+<span class="skill-tag">HTML/CSS</span>
+</div>
+</div>
+<div class="skill-group">
+<div class="skill-group-label">Backend &amp; Data</div>
+<div class="skill-tags">
+<span class="skill-tag">Supabase</span>
+<span class="skill-tag">OpenAI API</span>
+<span class="skill-tag">REST APIs</span>
+<span class="skill-tag">Node.js</span>
+<span class="skill-tag">Python</span>
+</div>
+</div>
+</div>
+<div>
+<div class="skill-group">
+<div class="skill-group-label">Tools &amp; Workflow</div>
+<div class="skill-tags">
+<span class="skill-tag">Git</span>
+<span class="skill-tag">GitHub</span>
+<span class="skill-tag">VS Code</span>
+<span class="skill-tag">Vercel</span>
+<span class="skill-tag">Figma</span>
+</div>
+</div>
+<div class="skill-group">
+<div class="skill-group-label">Domains</div>
+<div class="skill-tags">
+<span class="skill-tag">Web Development</span>
+<span class="skill-tag">AI Tools</span>
+<span class="skill-tag">UI/UX Design</span>
+<span class="skill-tag">Freelance</span>
+</div>
+</div>
+</div>
+</div>
+
+<h2>Projects</h2>
+
+<div class="project-item">
+<div class="meta">2025 &mdash; Sanctuary Yoga</div>
+<h3>Full-Stack Web Application</h3>
+<p>A yoga teacher marketplace connecting students with instructors nationwide. Built for scale with a serene, calming design language that reflects the brand's identity.</p>
+<div class="stack">
+<span>Next.js</span>
+<span>Tailwind</span>
+<span>Supabase</span>
+<span>TypeScript</span>
+</div>
+</div>
+
+<div class="project-item">
+<div class="meta">2025 &mdash; YouTube Hook Generator</div>
+<h3>AI-Powered Tool</h3>
+<p>AI-powered web app that generates scroll-stopping hooks for content creators. Integrates OpenAI's API to produce creative, platform-optimized hooks tailored to each creator's niche.</p>
+<div class="stack">
+<span>React</span>
+<span>OpenAI</span>
+<span>TypeScript</span>
+<span>Tailwind</span>
+</div>
+</div>
+
+<h2>Education</h2>
+<div class="education-item">
+<div class="school">Secondary School &mdash; Hong Kong</div>
+<div class="detail">Self-taught in web development and AI/ML through project-based learning and online resources.</div>
+</div>
+
+<h2>Freelance</h2>
+<p>Available for freelance projects on <a href="https://www.fiverr.com/s/kLqDY4g" target="_blank" rel="noopener">Fiverr</a>. Previous clients have included startups and small businesses looking for modern web presence and AI-powered solutions.</p>
+
+<hr>
+<p><a href="index.html">&larr; Back to portfolio</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="privacy.html">Privacy</a></p>
+</div>
+</body>
+</html>
